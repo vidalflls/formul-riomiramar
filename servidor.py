@@ -9,7 +9,8 @@ Para rodar:
 
 Variáveis opcionais:
     MIRAMAR_SENHA   senha da equipe (sem ela, basta informar o nome para entrar)
-    MIRAMAR_PORTA   porta do servidor (padrão 8000)
+    MIRAMAR_PORTA   porta do servidor (padrão: PORT, se existir, ou 8000)
+    MIRAMAR_BANCO   caminho do arquivo do banco (padrão: reservas.db nesta pasta)
 """
 
 import hmac
@@ -29,7 +30,7 @@ PASTA = Path(__file__).resolve().parent
 PASTA_STATIC = PASTA / "static"
 BANCO = Path(os.environ.get("MIRAMAR_BANCO", PASTA / "reservas.db"))
 SENHA = os.environ.get("MIRAMAR_SENHA", "")
-PORTA = int(os.environ.get("MIRAMAR_PORTA", "8000"))
+PORTA = int(os.environ.get("MIRAMAR_PORTA") or os.environ.get("PORT") or "8000")
 COOKIE = "miramar_sessao"
 
 TIPOS = {

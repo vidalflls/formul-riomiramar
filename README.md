@@ -51,6 +51,21 @@ $env:MIRAMAR_SENHA="suasenha"; python servidor.py
 
 Outra opção é `MIRAMAR_PORTA` para trocar a porta (padrão 8000).
 
+## Colocar na internet (Railway)
+
+Para a equipe acessar de qualquer lugar:
+
+1. Crie uma conta em https://railway.com entrando com o GitHub.
+2. **New Project → Deploy from GitHub repo** e escolha `formul-riomiramar`.
+3. No serviço criado, em **Variables**, adicione:
+   - `MIRAMAR_SENHA` = a senha da equipe
+   - `MIRAMAR_BANCO` = `/data/reservas.db`
+4. Clique com o botão direito no serviço → **Attach Volume** e use `/data` como caminho.
+   Sem isso, as reservas se perdem toda vez que o sistema reinicia.
+5. Em **Settings → Networking → Generate Domain**. O endereço gerado é o que a equipe vai usar.
+
+O sistema já lê a porta que o Railway define (`PORT`), então não precisa de mais nada.
+
 ## Backup
 
 Todas as reservas ficam no arquivo `reservas.db`, na mesma pasta do sistema.
