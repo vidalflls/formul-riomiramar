@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reservas · Miramar</title>
+  <link rel="icon" href="/static/favicon.png">
+  <link rel="stylesheet" href="/static/estilo.css">
+</head>
+<body>
+
+  <!-- Entrada: quem está atendendo -->
+  <section id="tela-entrada" class="entrada" hidden>
+    <img src="/static/logo.png" alt="Restaurante Miramar" class="logo-grande">
+    <form id="form-entrada" class="cartao" novalidate>
+      <h1>Reservas</h1>
+      <p class="sutil">Coloque seu nome. Ele vai aparecer nas reservas que você registrar.</p>
+      <label>Seu nome
+        <input name="nome" autocomplete="name" required>
+      </label>
+      <label id="campo-senha" hidden>Senha da equipe
+        <input name="senha" type="password" autocomplete="current-password">
+      </label>
+      <p class="erro" id="erro-entrada"></p>
+      <button type="submit">Entrar</button>
+    </form>
+  </section>
+
+  <!-- Sistema -->
+  <div id="tela-app" hidden>
+    <header class="topo">
+      <img src="/static/logo.png" alt="" class="logo-pequena">
+      <nav>
+        <button class="aba ativa" data-aba="nova">Nova reserva</button>
+        <button class="aba" data-aba="lista">Reservas</button>
+      </nav>
+      <div class="quem">
+        <span>Atendendo: <strong id="nome-atendente"></strong></span>
+        <button id="btn-sair" class="link">trocar</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- Formulário -->
+      <section id="aba-nova">
+        <form id="form-reserva" class="cartao" novalidate>
+          <h2 id="titulo-form">Nova reserva</h2>
+
+          <label>Cliente
+            <input name="cliente" autocomplete="off" required>
+            <small class="erro" data-erro="cliente"></small>
+          </label>
+
+          <div class="linha">
+            <label>Data da reserva
+              <input name="data" type="date" required>
+              <small class="erro" data-erro="data"></small>
+            </label>
+            <label>Pessoas
+              <input name="pessoas" type="number" min="1" max="500" inputmode="numeric" required>
+              <small class="erro" data-erro="pessoas"></small>
+            </label>
+          </div>
+
+          <label>Telefone para contato
+            <input name="telefone" type="tel" inputmode="tel" placeholder="(00) 00000-0000" required>
+            <small class="erro" data-erro="telefone"></small>
+          </label>
+
+          <label>Preferência de local
+            <textarea name="local" rows="3" placeholder="Ex.: perto do mar, na sombra, longe da caixa de som… Se não tiver, escreva &quot;sem preferência&quot;." required></textarea>
+            <small class="erro" data-erro="local"></small>
+          </label>
+
+          <fieldset>
+            <legend>Jacuzzi incluída?</legend>
+            <label class="opcao"><input type="radio" name="jacuzzi" value="sim"> Sim</label>
+            <label class="opcao"><input type="radio" name="jacuzzi" value="nao"> Não</label>
+            <small class="erro" data-erro="jacuzzi"></small>
+          </fieldset>
+
+          <p class="registrado" id="info-registro"></p>
+
+          <div class="acoes">
+            <button type="submit" id="btn-salvar">Salvar reserva</button>
+            <button type="button" id="btn-cancelar-edicao" class="secundario" hidden>Cancelar edição</button>
+          </div>
+        </form>
+
+        <div id="aviso" class="aviso" hidden></div>
+      </section>
+
+      <!-- Lista -->
+      <section id="aba-lista" hidden>
+        <div class="filtros cartao">
+          <div class="atalhos">
+            <button type="button" data-atalho="hoje">Hoje</button>
+            <button type="button" data-atalho="amanha">Amanhã</button>
+            <button type="button" data-atalho="fds">Fim de semana</button>
+            <button type="button" data-atalho="7dias">Próximos 7 dias</button>
+            <button type="button" data-atalho="mes">Este mês</button>
+            <button type="button" data-atalho="proximas">Todas as próximas</button>
+            <button type="button" data-atalho="todas">Todas</button>
+          </div>
+          <div class="campos-filtro">
+            <label>De <input type="date" id="f-de"></label>
+            <label>Até <input type="date" id="f-ate"></label>
+            <label>Cliente ou telefone <input type="search" id="f-busca" placeholder="Buscar…"></label>
+            <label>Jacuzzi
+              <select id="f-jacuzzi">
+                <option value="">Tanto faz</option>
+                <option value="sim">Com jacuzzi</option>
+                <option value="nao">Sem jacuzzi</option>
+              </select>
+            </label>
+            <label>Registrada por
+              <select id="f-por"><option value="">Qualquer pessoa</option></select>
+            </label>
+          </div>
+        </div>
+
+        <p class="resumo" id="resumo"></p>
+        <div id="lista"></div>
+      </section>
+    </main>
+  </div>
+
+  <template id="tpl-reserva">
+    <article class="reserva">
+      <div class="reserva-topo">
+        <strong class="r-cliente"></strong>
+        <span class="r-pessoas"></span>
+        <span class="selo r-jacuzzi"></span>
+      </div>
+      <p class="r-local"></p>
+      <p class="r-contato">
+        <a class="r-tel"></a>
+        <a class="r-whats" target="_blank" rel="noopener">WhatsApp</a>
+      </p>
+      <p class="r-quem"></p>
+      <div class="r-botoes">
+        <button class="link r-editar">editar</button>
+        <button class="link perigo r-apagar">apagar</button>
+      </div>
+    </article>
+  </template>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
